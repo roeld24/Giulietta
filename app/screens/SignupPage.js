@@ -2,35 +2,31 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import BASE_URL from '../utils/Config';
 
-const SignupPage = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const handleSignup = async () => {
+  console.log('Requesting POST to /register', { email, password });
 
-  const handleSignup = async () => {
-    console.log('Requesting POST to /register', { email, password });
-  
-    try {
-      const response = await fetch('http://192.168.1.142:8080/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-  
-      const data = await response.text(); // Ottieni il testo della risposta
-  
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}, message: ${data}`);
-      }
-  
-      const jsonData = JSON.parse(data); // Analizza il JSON solo se la risposta è ok
-  
-      Alert.alert('Registration Successful', 'You can now log in!');
-      navigation.navigate('Login');
-    } catch (error) {
-      console.error('Signup error:', error);
-      Alert.alert('Error', 'An error occurred during registration.');
+  try {
+    const response = await fetch('http://192.168.1.142:5000/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-  };
+
+    const jsonData = await response.json();  // Analizza il JSON direttamente
+    console.log('Response from server:', jsonData);
+
+    Alert.alert('Registration Successful', 'You can now log in!');
+    navigation.navigate('Login');
+  } catch (error) {
+    console.error('Signup error:', error);
+    Alert.alert('Error', 'An error occurred during registration.');
+  }
+};
+
 
   return (
     <View style={styles.container}>
