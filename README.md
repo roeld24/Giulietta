@@ -53,3 +53,25 @@ Join our community of developers creating universal apps.
 ## how to start
 - sudo systemctl start mongod
 - npm run dev
+
+## how does it work? 
+- users 
+   - login: should be able to login thanks to a pw and a username
+   - register: not needed, every user will be registered from the admin
+   - should be able to start a timer only through a qr code, once timer started they should be able to pause it or to stop it and to save the session
+   - each user should be able to see his sessions, filter them by month
+   *optional*
+   - can check his shifts, will receive notification to start/stop the timer
+      - after 6 hours shift, user will start receiving notifications to stop the timer
+
+- admin
+   - possibility to register and delete users 
+   - possibility to see all users and their sessions
+   - can see per month the total of hours done
+   - can export each monthly session in a file
+   - can modify single session of a user (in case they forgot to start/stop the timer)
+   *optional*
+   - can upload users shift
+   - receive notification when a user starts/stop the timer
+
+
